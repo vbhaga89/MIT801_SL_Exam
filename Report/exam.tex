@@ -38,13 +38,7 @@
 }
 
 % Bibliography
-\usepackage[
-    backend=biber,
-    style=authoryear,
-    sorting=nyt,
-    maxcitenames=1,
-    mincitenames=1
-]{biblatex}
+\usepackage[style=ieee,backend=biber]{biblatex}
 \addbibresource{references.bib}
 
 % Hyperlinks
@@ -89,18 +83,13 @@
 
 \import{sections/}{question1.tex}
 
+\newpage
+
 \import{sections/}{question2.tex}
 
-% \import{sections/}{question3.tex}
+\newpage
 
-% \import{sections/}{question4.tex}
+\printbibliography[title={References}]
 
-% \import{sections/}{question5.tex}
-
-% \import{sections/}{question6.tex}
-
-% \newpage
-
-% \import{sections/}{appendix.tex}
 
 \end{document}
