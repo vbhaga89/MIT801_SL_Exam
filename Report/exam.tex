@@ -1,0 +1,106 @@
+\documentclass[12pt,a4paper]{article}
+
+% Encoding and font
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Times New Roman font
+\usepackage{newtxtext,newtxmath}
+
+% General packages
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{csquotes}
+\usepackage{setspace}
+\usepackage{import}
+\usepackage{titling}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    frame=single,
+    breaklines=true,
+    showstringspaces=false,
+    captionpos=t,
+    tabsize=4
+}
+
+% Bibliography
+\usepackage[
+    backend=biber,
+    style=authoryear,
+    sorting=nyt,
+    maxcitenames=1,
+    mincitenames=1
+]{biblatex}
+\addbibresource{references.bib}
+
+% Hyperlinks
+\usepackage[
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+]{hyperref}
+
+% Custom column type
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+% Page margins
+\geometry{margin=1in}
+
+% 1.5 line spacing
+\onehalfspacing
+
+% Paragraph spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+% Title spacing
+\setlength{\droptitle}{-2cm}
+
+% Title
+\title{Final Assignment}
+\author{
+    Vishal Bhaga\\
+    u20470194\\
+    MIT 800
+}
+\date{\today}
+
+\begin{document}
+
+% Title page
+\input{title_page.tex}
+
+\newpage
+
+\import{sections/}{question1.tex}
+
+\import{sections/}{question2.tex}
+
+% \import{sections/}{question3.tex}
+
+% \import{sections/}{question4.tex}
+
+% \import{sections/}{question5.tex}
+
+% \import{sections/}{question6.tex}
+
+% \newpage
+
+% \import{sections/}{appendix.tex}
+
+\end{document}
