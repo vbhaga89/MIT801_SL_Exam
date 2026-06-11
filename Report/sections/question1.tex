@@ -1,2 +1,126 @@
 \section*{Question 1}
 
+\partquestion{(a)}A logistic regression model was fit on the \emph{LogData.xlsx} dataset. This was done
+using the \emph{Logit} class from the \emph{statsmodels} library in Python.
+
+\begin{enumerate}[label=\roman*.]
+    \item After fitting the model, the following estimated values were obtained:
+         \[\hat{\beta_0} = -1.9496\]
+         \[\hat{\beta_1} = 0.0243\]
+
+         Hence, the linear predictor is:
+         \[\hat{\eta}(x) = -1.9496 + 0.0243x\] 
+         
+    \item Using the linear predictor equation provided:
+         \[\log \frac{P(TT = 1 | x)}{1 - P(TT = 1 | x)} = \hat{\eta}(x),\]
+
+         the probability that TT equals 1 given $x$ (estimated prediction probability function) is:
+         \[P(TT = 1 | x) = \frac{1}{1 + e^{-\hat{\eta}(x)}} = \frac{1}{1 + e^{-(-1.9496 + 0.0242x)}}.\]
+
+    \item Figure \ref{fig:sp_simple} illustrates the scatter plot of $TT$ against $x$:
+    
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/output_simple.png}
+            \caption{Scatter Plot of $TT$ against $x$}
+            \label{fig:sp_simple}
+          \end{figure}
+
+          From Figure \ref{fig:sp_simple}, the predicted probabilities of each point can be
+          seen in orange with the estimated probability function plotted over the scatter points.
+          The original input data points can also be seen at 0.0 and 1.0.
+
+    \item Figure \ref{fig:cm_simple} illustrates the confusion matrix of the outcomes predicted
+          by the logistic regression model:
+
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.55\textwidth]{images/confusion_matrix_simple.png}
+            \caption{Confusion Matrix}
+            \label{fig:cm_simple}
+          \end{figure}
+
+          In addition to Figure \ref{fig:cm_simple}, the Somers' D value was calculated as:
+          \[D_{yx} = 2 \times (AUC - 0.5) = 0.4453\]
+
+\end{enumerate}
+
+\partquestion{(b)}A cubic splines logistic regression model was fit on the \emph{LogData.xlsx} dataset with
+knots at 50 and 80. This was done using the \emph{Logit} class from the 
+\emph{statsmodels} library in Python to ensure consistency with (a).
+
+\begin{enumerate}[label=\roman*.]
+    \item The basis functions for a cubic splines logistic regression model with knots at 50 and
+          80 are as follows:
+          \[b_1(x) = x,\]
+          \[b_2(x) = x^2,\]
+          \[b_3(x) = x^3,\]
+          \[b_4(x) = (x - 50)_+^3,\]
+          \[b_5(x) = (x - 80)_+^3,\]
+
+          where 
+          \[(x - c)_+^3 =   \begin{cases} 
+                                (x - c)^3 & x > c \\
+                                0 & x \leq c.
+                            \end{cases}
+          \]
+
+          The corresponding coefficient estimates from the fitted model are as follows:
+          \[\hat{\beta_0} = 11.5914,\]
+          \[\hat{\beta_1} = -1.0457,\]
+          \[\hat{\beta_2} = 0.0276,\]
+          \[\hat{\beta_3} = -0.0002,\]
+          \[\hat{\beta_4} = 0.0003,\]
+          \[\hat{\beta_5} = -0.0002.\]
+
+          Hence, the predictor is as follows:
+          \[\hat{\eta}(x) = 11.5914 - 1.0457x + 0.0276x^2 - 0.0002x^3 + 0.0003(x - 50)_+^3 - 0.0002(x - 80)_+^3\]
+
+    \item Using the log-odds (logit) function:
+         \[\log \frac{P(TT = 1 | x)}{1 - P(TT = 1 | x)} = \hat{\eta}(x),\]
+
+         the probability that TT equals 1 given $x$ (estimated prediction probability function) is:
+         \[P(TT = 1 | x) = \frac{1}{1 + e^{-\hat{\eta}(x)}}\]
+         \[P(TT = 1 | x) = \frac{1}{1 + e^{-(11.5914 - 1.0457x + 0.0276x^2 - 0.0002x^3 + 0.0003(x - 50)_+^3 - 0.0002(x - 80)_+^3)}}.\]                      
+
+    \newpage 
+
+    \item Figure \ref{fig:sp_spline} illustrates the scatter plot of $TT$ against $x$:
+    
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/output_spline.png}
+            \caption{Scatter Plot of $TT$ against $x$}
+            \label{fig:sp_spline}
+          \end{figure}
+
+          From Figure \ref{fig:sp_spline}, the predicted probabilities of each point can be
+          seen in orange with the estimated probability function plotted over the scatter points.
+          The original input data points can also be seen at 0.0 and 1.0.
+
+    \item Figure \ref{fig:cm_spline} illustrates the confusion matrix of the outcomes predicted
+          by the cubic splines logistic regression model:
+
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.55\textwidth]{images/confusion_matrix_spline.png}
+            \caption{Confusion Matrix}
+            \label{fig:cm_spline}
+          \end{figure}
+
+          In addition to Figure \ref{fig:cm_spline}, the Somers' D value was calculated as:
+          \[D_{yx} = 2 \times (AUC - 0.5) = 0.6016\]
+
+\end{enumerate}
+
+\partquestion{(c)}The best model is the cubic spline logistic regression model fitted in Question 1.b.
+When looking at the confusion matrix of both models (Figure \ref{fig:cm_simple} and Figure \ref{fig:cm_spline}),
+it can be seen that the cubic spline logistic regression model outperforms the simple logistic regression
+model producing a large reduction in False Positives from 99 to 49 and slight reduction in False Negatives
+from 87 to 83. It is therefore better at classifying the training data in general.
+In addition, the cubic spline logistic regression model also has a better Somers' D value
+of 0.6016 against the simple logistic regression's Somers' D value of 0.4453. Somers' D measures
+the model's predictive power and discrimination. Models having a Somers' D value closer to 1 are
+better classifiers. Thus, the cubic spline logistic regression model is the better model. This is
+expected because it is also more flexible allowing the relationship to change shape around the knots 
+at 50 and 80.
