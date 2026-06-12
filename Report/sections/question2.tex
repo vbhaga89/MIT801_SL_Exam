@@ -57,7 +57,8 @@ P(Y=k\mid X=x)
 \right)
 }.
 \]
-To classify a value $X = x$, we need to see which of $p_k(x)$ is largest. By taking the logs,
+To classify a value $X = x$, we need to see which of $p_k(x)$ is largest. Only the numerator is
+needed because the denominator is the same for all the classes. By taking the logs,
 and removing terms that do not depend on k, we obtain the following Linear Discriminant function
 (Score Function):
 \[\delta_k(x) = x^T\hat{\Sigma}^{-1}\hat{\mu}_k - \frac{1}{2}\hat{\mu}_k^T\hat{\Sigma}^{-1}\hat{\mu}_k + \log(\hat{\pi}_k)\]
@@ -261,7 +262,7 @@ class from \emph{scikit-learn} was used.
           \begin{figure}[h]
             \centering
             \includegraphics[width=0.55\textwidth]{images/confusion_matrix_lda.png}
-            \caption{Confusion Matrix}
+            \caption{Confusion Matrix of the LDA model}
             \label{fig:cm_lda}
           \end{figure}
 
@@ -296,4 +297,331 @@ class from \emph{scikit-learn} was used.
 
 \end{enumerate}
 
-\partquestion{(c)}
+
+
+\partquestion{(c)-(e)iii.}
+
+For the starting means, standard deviations and mixing proportions,
+the following logic was used.
+
+\textbf{Mixing Proportions:} The starting mixing proportions for cluster $k$ is the fraction
+of data points assigned to cluster $k$ by K-means.
+
+\textbf{Means:} The starting means are simply the centroids for each cluster determined by K-means.
+
+\textbf{Standard Deviations:} The starting standard deviation is the spatial spread of points assigned
+to K-means cluster $k$.
+
+\newpage
+
+\partquestion{(c)}\textbf{K = 2 components:}
+
+\begin{enumerate}[label=\roman*.]
+    \item K-means clustering was fit with 2 components to the combined data using the \emph{Kmeans} class
+          from \emph{scikit-learn}. The \emph{random\_state} was set to 42 for consistency. Table \ref{tab:kmeans_centroids_2}
+          illustrates the estimated centroids:
+
+          \begin{table}[h]
+            \centering
+            \caption{Estimated Centroids for K-means with 2 components}
+            \begin{tabular}{ccc}
+            \hline
+            Cluster & Centroid $X_1$ & Centroid $X_2$ \\
+            \hline
+            1 & 104.5338 & 101.6268 \\
+            2 & 105.9013 & 118.9034 \\
+            \hline
+            \end{tabular}
+            \label{tab:kmeans_centroids_2}
+          \end{table}
+
+    \item Using the fitted K-means model with 2 components, the following classified data
+          can be seen in Figure \ref{fig:kmeans_scatter_2}:
+
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/K2/Kmeans.png}
+            \caption{Clustered Data using K-means with 2 components}
+            \label{fig:kmeans_scatter_2}
+          \end{figure}
+
+    \item Thereafter, a GMM model with 2 components was fitted using the \emph{GaussianMixture}
+          class from \emph{scikit-learn}. The \emph{random\_state} was set to 42 for consistency.
+          The starting means, standard deviations and mixing proportions were obtained from the
+          K-means model fitted in (i) and used during initialisation of the \emph{GaussianMixture} class.
+          The starting values can be seen in Table \ref{tab:gmm_starting_values_2}:
+
+          \begin{table}[h]
+            \centering
+            \caption{Starting Values for the GMM with 2 components}
+            \begin{tabular}{cccccc}
+            \hline
+            Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
+            \hline
+            1 & 104.5338 & 101.6268 & 6.8624 & 4.9744 & 0.5359 \\
+            2 & 105.9013 & 118.9034 & 5.5837 & 5.0067 & 0.4641 \\
+            \hline
+            \end{tabular}
+            \label{tab:gmm_starting_values_2}
+          \end{table}
+
+          \newpage
+
+          Using the starting values seen in Table \ref{tab:gmm_starting_values_2}, a GMM model
+          was fit and the following estimated values, seen in Table \ref{tab:gmm_estimated_values_2}, were obtained:
+
+          \begin{table}[h]
+            \centering
+            \caption{Estimated Values for the GMM with 2 components}
+            \begin{tabular}{cccccc}
+            \hline
+            Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
+            \hline
+            1 & 105.6017 & 102.5052 & 7.0389 & 5.6883 & 0.5780 \\
+            2 & 104.5752 & 119.4258 & 5.1567 & 5.0024 & 0.4220 \\
+            \hline
+            \end{tabular}
+            \label{tab:gmm_estimated_values_2}
+          \end{table}     
+          
+          Thereafter, the fitted GMM model's information criteria, $AIC$ and $BIC$, were obtained:
+            \[
+            \begin{aligned}
+            \text{AIC} &= 19694.2276,\\
+            \text{BIC} &= 19752.3001.
+            \end{aligned}
+            \]
+
+    \item Using the fitted GMM model with 2 components, the following classified data
+          can be seen in Figure \ref{fig:gmm_scatter_2}:
+
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/K2/gmm.png}
+            \caption{Clustered Data using GMM with 2 components}
+            \label{fig:gmm_scatter_2}
+          \end{figure}
+
+\end{enumerate}
+
+\newpage
+
+\partquestion{(d)}\textbf{K = 3 components:}
+
+\begin{enumerate}[label=\roman*.]
+    \item K-means clustering was fit with 3 components to the combined data using the \emph{Kmeans} class
+          from \emph{scikit-learn}. The \emph{random\_state} was set to 42 for consistency. Table \ref{tab:kmeans_centroids_3}
+          illustrates the estimated centroids:
+
+          \begin{table}[h]
+            \centering
+            \caption{Estimated Centroids for K-means with 3 components}
+            \begin{tabular}{ccc}
+            \hline
+            Cluster & Centroid $X_1$ & Centroid $X_2$ \\
+            \hline
+            1 & 99.7470  & 99.3085 \\
+            2 & 104.8763 & 120.0094 \\
+            3 & 111.0364 & 106.0356 \\
+            \hline
+            \end{tabular}
+            \label{tab:kmeans_centroids_3}
+          \end{table}
+
+    \item Using the fitted K-means model with 3 components, the following classified data
+          can be seen in Figure \ref{fig:kmeans_scatter_3}:
+
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/K3/Kmeans.png}
+            \caption{Clustered Data using K-means with 3 components}
+            \label{fig:kmeans_scatter_3}
+          \end{figure}
+
+    \item Thereafter, a GMM model with 3 components was fitted using the \emph{GaussianMixture}
+          class from \emph{scikit-learn}. The \emph{random\_state} was set to 42 for consistency.
+          The starting means, standard deviations and mixing proportions were obtained from the
+          K-means model fitted in (i) and used during initialisation of the \emph{GaussianMixture} class.
+          The starting values can be seen in Table \ref{tab:gmm_starting_values_3}:
+
+          \begin{table}[h]
+            \centering
+            \caption{Starting Values for the GMM with 3 components}
+            \begin{tabular}{cccccc}
+            \hline
+            Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
+            \hline
+            1 & 99.7470  & 99.3085  & 4.5787 & 4.9459 & 0.3000 \\
+            2 & 104.8763 & 120.0094 & 4.9881 & 4.3945 & 0.4028 \\
+            3 & 111.0364 & 106.0356 & 4.0027 & 4.0317 & 0.2972 \\
+            \hline
+            \end{tabular}
+            \label{tab:gmm_starting_values_3}
+          \end{table}
+
+          \newpage
+
+          Using the starting values seen in Table \ref{tab:gmm_starting_values_3}, a GMM model
+          was fit and the following estimated values, seen in Table \ref{tab:gmm_estimated_values_3}, were obtained:
+
+          \begin{table}[h]
+            \centering
+            \caption{Estimated Values for the GMM with 3 components}
+            \begin{tabular}{cccccc}
+            \hline
+            Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
+            \hline
+            1 & 100.5453 & 99.6885  & 5.3160 & 5.2141 & 0.2975 \\
+            2 & 104.6707 & 119.6564 & 5.0813 & 4.7909 & 0.4129 \\
+            3 & 110.6269 & 105.6018 & 4.5360 & 4.5226 & 0.2896 \\
+            \hline
+            \end{tabular}
+            \label{tab:gmm_estimated_values_3}
+          \end{table}     
+          
+          Thereafter, the fitted GMM model's information criteria, $AIC$ and $BIC$, were obtained:
+            \[
+            \begin{aligned}
+            \text{AIC} &= 19675.2533,\\
+            \text{BIC} &= 19765.0017.
+            \end{aligned}
+            \]
+
+    \item Using the fitted GMM model with 3 components, the following classified data
+          can be seen in Figure \ref{fig:gmm_scatter_3}:
+
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/K3/gmm.png}
+            \caption{Clustered Data using GMM with 3 components}
+            \label{fig:gmm_scatter_3}
+          \end{figure}
+
+\end{enumerate}
+
+\newpage
+
+\partquestion{(e)}\textbf{K = 4 components:}
+
+\begin{enumerate}[label=\roman*.]
+    \item K-means clustering was fit with 4 components to the combined data using the \emph{Kmeans} class
+          from \emph{scikit-learn}. The \emph{random\_state} was set to 42 for consistency. Table \ref{tab:kmeans_centroids_4}
+          illustrates the estimated centroids:
+
+          \begin{table}[h]
+            \centering
+            \caption{Estimated Centroids for K-means with 4 components}
+            \begin{tabular}{ccc}
+            \hline
+            Cluster & Centroid $X_1$ & Centroid $X_2$ \\
+            \hline
+            1 & 111.2671 & 105.8966 \\
+            2 & 107.8834 & 122.4818 \\
+            3 & 99.8886  & 98.5331 \\
+            4 & 100.7348 & 115.4825 \\
+            \hline
+            \end{tabular}
+            \label{tab:kmeans_centroids_4}
+          \end{table}
+
+    \item Using the fitted K-means model with 4 components, the following classified data
+          can be seen in Figure \ref{fig:kmeans_scatter_4}:
+
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/K4/Kmeans.png}
+            \caption{Clustered Data using K-means with 4 components}
+            \label{fig:kmeans_scatter_4}
+          \end{figure}
+
+    \item Thereafter, a GMM model with 4 components was fitted using the \emph{GaussianMixture}
+          class from \emph{scikit-learn}. The \emph{random\_state} was set to 42 for consistency.
+          The starting means, standard deviations and mixing proportions were obtained from the
+          K-means model fitted in (i) and used during initialisation of the \emph{GaussianMixture} class.
+          The starting values can be seen in Table \ref{tab:gmm_starting_values_4}:
+
+          \begin{table}[h]
+            \centering
+            \caption{Starting Values for the GMM with 4 components}
+            \begin{tabular}{cccccc}
+            \hline
+            Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
+            \hline
+            1 & 111.2671 & 105.8966 & 3.8095 & 3.9774 & 0.2869 \\
+            2 & 107.8834 & 122.4818 & 3.8208 & 3.6457 & 0.2303 \\
+            3 & 99.8886  & 98.5331  & 4.6618 & 4.3288 & 0.2772 \\
+            4 & 100.7348 & 115.4825 & 3.4678 & 3.8975 & 0.2055 \\
+            \hline
+            \end{tabular}
+            \label{tab:gmm_starting_values_4}
+          \end{table}
+
+          \newpage
+
+          Using the starting values seen in Table \ref{tab:gmm_starting_values_4}, a GMM model
+          was fit and the following estimated values, seen in Table \ref{tab:gmm_estimated_values_4}, were obtained:
+
+          \begin{table}[h]
+            \centering
+            \caption{Estimated Values for the GMM with 4 components}
+            \begin{tabular}{cccccc}
+            \hline
+            Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
+            \hline
+            1 & 110.6256 & 105.6406 & 4.5479 & 4.4650 & 0.2866 \\
+            2 & 107.3547 & 121.6554 & 4.1547 & 4.1872 & 0.2327 \\
+            3 & 100.6293 & 99.4669  & 5.4124 & 5.0472 & 0.2932 \\
+            4 & 101.2129 & 116.7777 & 3.9741 & 4.4752 & 0.1875 \\
+            \hline
+            \end{tabular}
+            \label{tab:gmm_estimated_values_4}
+          \end{table}     
+          
+          Thereafter, the fitted GMM model's information criteria, $AIC$ and $BIC$, were obtained:
+            \[
+            \begin{aligned}
+            \text{AIC} &= 19687.3218,\\
+            \text{BIC} &= 19808.7462.
+            \end{aligned}
+            \]
+
+    \item Using the fitted GMM model with 4 components, the following classified data
+          can be seen in Figure \ref{fig:gmm_scatter_4}:
+
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/K4/gmm.png}
+            \caption{Clustered Data using GMM with 4 components}
+            \label{fig:gmm_scatter_4}
+          \end{figure}
+
+\end{enumerate}
+
+\partquestion{(f)}To determine the best GMM model, a AIC and BIC curve was plotted
+against the number of components (clusters) to find a potential 'elbow' (Point at which
+there is balance between model complexity and how well the model fits the data):
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.55\textwidth]{images/elbow.png}
+    \caption{AIC and BIC values for different GMM models}
+    \label{fig:elbow}
+\end{figure}
+
+According to Figure \ref{fig:elbow}, although the 2-component model has a slightly 
+lower BIC, the 3-component model has the lowest AIC. Hence, the 3-component model
+provides a more meaningful representation of the observed structure of the data. The 2-component
+model does not fit the data well enough since it merges some groups together whereas the
+4-component model is too complex, splitting groups unnecessarily. Thus, the 3-component
+GMM model represents a model that provides the best balance of model complexity and model fit.
+
+\partquestion{(g)}The GMM with 3 components was then used to classify the observations using
+hard classification. The following confusion matrix was obtained:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.55\textwidth]{images/confusion_matrix_gmm.png}
+    \caption{Confusion Matrix of the GMM model with 3 components}
+    \label{fig:cm_gmm}
+\end{figure}
+
