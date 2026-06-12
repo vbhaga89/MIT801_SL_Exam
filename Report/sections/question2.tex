@@ -60,7 +60,7 @@ P(Y=k\mid X=x)
 To classify a value $X = x$, we need to see which of $p_k(x)$ is largest. Only the numerator is
 needed because the denominator is the same for all the classes. By taking the logs,
 and removing terms that do not depend on k, we obtain the following Linear Discriminant function
-(Score Function):
+(Score Function) \parencite{gareth2023introduction}:
 \[\delta_k(x) = x^T\hat{\Sigma}^{-1}\hat{\mu}_k - \frac{1}{2}\hat{\mu}_k^T\hat{\Sigma}^{-1}\hat{\mu}_k + \log(\hat{\pi}_k)\]
 
 \partquestion{(b)}The training data was used to fit an LDA model. The \emph{LinearDiscriminantAnalysis}
@@ -302,16 +302,26 @@ class from \emph{scikit-learn} was used.
 \partquestion{(c)-(e)iii.}
 
 For the starting means, standard deviations and mixing proportions,
-the following logic was used.
+the following logic was used \parencite{blomer2013simple}.
 
 \textbf{Mixing Proportions:} The starting mixing proportions for cluster $k$ is the fraction
-of data points assigned to cluster $k$ by K-means.
-
-\textbf{Means:} The starting means are simply the centroids for each cluster determined by K-means.
-
+of data points assigned to cluster $k$ by K-means:
+\[
+w_k = \frac{|C_k|}{|X|}
+\]
+\textbf{Means:} The starting means are simply the centroids for each cluster determined by K-means:
+\[
+\mu_k = \frac{1}{|C_k|}
+\sum_{x \in C_k} x
+\]
 \textbf{Standard Deviations:} The starting standard deviation is the spatial spread of points assigned
-to K-means cluster $k$.
-
+to K-means cluster $k$:
+\[
+\Sigma_k =
+\frac{1}{|C_k|}
+\sum_{x \in C_k}
+(x - \mu_k)(x - \mu_k)^T
+\]
 \newpage
 
 \partquestion{(c)}\textbf{K = 2 components:}
@@ -612,7 +622,7 @@ According to Figure \ref{fig:elbow}, although the 2-component model has a slight
 lower BIC, the 3-component model has the lowest AIC. Hence, the 3-component model
 provides a more meaningful representation of the observed structure of the data. The 2-component
 model does not fit the data well enough since it merges some groups together whereas the
-4-component model is too complex, splitting groups unnecessarily. Thus, the 3-component
+4-component model is too complex, splitting groups unnecessarily \parencite{geron2019hands}. Thus, the 3-component
 GMM model represents a model that provides the best balance of model complexity and model fit.
 
 \partquestion{(g)}The GMM with 3 components was then used to classify the observations using
