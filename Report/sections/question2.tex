@@ -290,7 +290,7 @@ class from \emph{scikit-learn} was used.
             \label{tab:lda_class_metrics}
           \end{table}
 
-          Using the results obtained from Table \ref{fig:cm_lda}, the following mean values
+          Using the results obtained from Table \ref{tab:lda_class_metrics}, the following mean values
           were obtained:
           \[\text{Mean Sensitivity} = 0.8450\]
           \[\text{Mean Specificity} = 0.9440\]
@@ -625,3 +625,47 @@ hard classification. The following confusion matrix was obtained:
     \label{fig:cm_gmm}
 \end{figure}
 
+\newpage
+
+From Figure \ref{fig:cm_gmm}, the following overall accuracy was obtained:
+
+\[Accuracy = \frac{292 + 361 + 583}{1450} \times 100 = 85.24 \%. \]
+
+The following class sensitivity and specificity was also obtained:
+
+\begin{table}[h]
+  \centering
+  \caption{Class-wise Sensitivity and Specificity}
+  \begin{tabular}{ccccccc}
+  \hline
+  Class & TP & FN & FP & TN & Sensitivity & Specificity \\
+  \hline
+  1 & 292 & 58  & 137 & 1013 & 0.8343 & 0.8809 \\
+  2 & 361 & 139 & 56  & 944  & 0.7220 & 0.9440 \\
+  3 & 583 & 17  & 21  & 879  & 0.9717 & 0.9767 \\
+  \hline
+  \end{tabular}
+  \label{tab:gmm_class_metrics}
+\end{table}
+
+Using the results obtained from Table \ref{tab:gmm_class_metrics}, the following mean values
+were obtained:
+\[\text{Mean Sensitivity} = 0.8427\]
+\[\text{Mean Specificity} = 0.9339\]
+
+Comparing the results obtained to the ones obtained from the LDA model used in 2.(b), it is clear
+that the LDA outperformed the GMM model. The sensitivity and specificity of the LDA model
+seen in Table \ref{tab:lda_class_metrics} show an overall better model performance over the 
+results seen in Table \ref{tab:gmm_class_metrics} for the GMM model with 3 compo The main reason has to do with the fact that the LDA
+model was a supervised model which knew the group labels during training. The GMM model with 
+3 components was able to identify group 3 very well but often confused true group 2 points as
+group 1 instead. The model achieved an overall accuracy of 85.24\% which is not that far off
+from the LDA's performance of 88.28\%. This shows that unsupervised learning can discover
+meaningful insights from the data and pick up the latent structure oof the data even without
+using true labels.
+
+In conclusion, when class labels are available, a supervised approach is generally better
+for accurate classification, but when class labels are not present, unsupervised approaches
+such as Kmeans or GMMs, provide a useful way to identify natural clusters in the data. Hence,
+unsupervised approaches can be very useful for tasks such as dimensionality reduction as well as
+feature extraction.
