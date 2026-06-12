@@ -1,1 +1,299 @@
 \section*{Question 2}
+
+\partquestion{(a)}For LDA, we classify an instance $x$ into class $k$ with the largest
+posterior probability. Using Bayes' theorem:
+\[P(Y = k | X = x) = p_k(x) =  \frac{\pi_k f_k(x)}{\sum_{l = 1}^{K} \pi_l f_l(x)},\]
+and substituting $f_k(x)$, we obtain the following equation:
+\[
+P(Y=k\mid X=x)
+=
+\frac{
+\pi_k
+\left[
+\frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}
+\exp\left(
+-\frac{1}{2}
+(x-\mu_k)^T
+\Sigma^{-1}
+(x-\mu_k)
+\right)
+\right]
+}
+{
+\sum_{l=1}^{K}
+\pi_l
+\left[
+\frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}
+\exp\left(
+-\frac{1}{2}
+(x-\mu_l)^T
+\Sigma^{-1}
+(x-\mu_l)
+\right)
+\right]
+}.
+\]
+By removing the common terms present in both the numerator and denominator, we get
+\[
+P(Y=k\mid X=x)
+=
+\frac{
+\pi_k
+\exp\left(
+-\frac{1}{2}
+(x-\mu_k)^T
+\Sigma^{-1}
+(x-\mu_k)
+\right)
+}
+{
+\sum_{l=1}^{K}
+\pi_l
+\exp\left(
+-\frac{1}{2}
+(x-\mu_l)^T
+\Sigma^{-1}
+(x-\mu_l)
+\right)
+}.
+\]
+To classify a value $X = x$, we need to see which of $p_k(x)$ is largest. By taking the logs,
+and removing terms that do not depend on k, we obtain the following Linear Discriminant function
+(Score Function):
+\[\delta_k(x) = x^T\hat{\Sigma}^{-1}\hat{\mu}_k - \frac{1}{2}\hat{\mu}_k^T\hat{\Sigma}^{-1}\hat{\mu}_k + \log(\hat{\pi}_k)\]
+
+\partquestion{(b)}The training data was used to fit an LDA model. The \emph{LinearDiscriminantAnalysis}
+class from \emph{scikit-learn} was used.
+
+\begin{enumerate}[label=\roman*.]
+    \item The fitted model estimates were found as follows:
+    
+          \textbf{Estimated prior probabilities:}
+
+          \begin{table}[h]
+            \centering
+            \caption{Estimated Prior Probabilities}
+            \begin{tabular}{cc}
+            \hline
+            Class $k$ & $\hat{\pi}_k$ \\
+            \hline
+            1 & 0.2466 \\
+            2 & 0.3474 \\
+            3 & 0.4060 \\
+            \hline
+            \end{tabular}
+            \label{tab:prior_prob}
+          \end{table}
+
+          \newpage
+
+          \textbf{Estimated class mean vectors (centroids):}
+
+          \begin{table}[h]
+            \centering
+            \caption{Estimated Class Mean Vectors}
+            \begin{tabular}{ccc}
+            \hline
+            Class $k$ & $\hat{\mu}_{k,1}$ & $\hat{\mu}_{k,2}$ \\
+            \hline
+            1 & 99.8582 & 100.0497 \\
+            2 & 109.5319 & 104.6407 \\
+            3 & 104.5715 & 119.3876 \\
+            \hline
+            \end{tabular}
+            \label{tab:class_mean_vectors}
+          \end{table}
+
+          \textbf{Estimated shared covariance matrix:}
+
+          \[
+            \hat{\Sigma}=
+            \begin{bmatrix}
+            26.08973240 & 11.76180644 \\
+            11.76180644 & 26.56801875
+            \end{bmatrix},
+          \]
+
+          and 
+
+          \[
+            \hat{\Sigma}^{-1}=
+            \begin{bmatrix}
+            0.04788649 & -0.02119961 \\
+            -0.02119961 & 0.04702442
+            \end{bmatrix}
+          \]
+
+    \item The estimated discriminant functions of the fitted model in terms of $X_1$ and $X_2$ was obtained
+          by substituting the fitted model estimate parameters found in (b) i. into the score function obtained
+          in (a):
+
+          \begin{align*}
+            \delta_1(X)
+            &=
+            \begin{bmatrix}
+            X_1 & X_2
+            \end{bmatrix}
+            \begin{bmatrix}
+            0.04788649 & -0.02119961 \\
+            -0.02119961 & 0.04702442
+            \end{bmatrix}
+            \begin{bmatrix}
+            99.8582 \\
+            100.0497
+            \end{bmatrix}
+            \\[1em]
+            &\quad
+            -\frac{1}{2}
+            \begin{bmatrix}
+            99.8582 & 100.0497
+            \end{bmatrix}
+            \begin{bmatrix}
+            0.04788649 & -0.02119961 \\
+            -0.02119961 & 0.04702442
+            \end{bmatrix}
+            \begin{bmatrix}
+            99.8582 \\
+            100.0497
+            \end{bmatrix}
+            +\log(0.2466)
+            \\[1em]
+            &=
+            \begin{bmatrix}
+            X_1 & X_2
+            \end{bmatrix}
+            \begin{bmatrix}
+            2.6540 \\
+            2.5811
+            \end{bmatrix}
+            - 527.4675 + \log(0.2466)
+            \\[1em]
+            &\underrightarrow{=-263.0309 + 2.6540X_1 + 2.5811X_2}.
+          \end{align*}
+          \begin{align*}
+            \delta_2(X)
+            &=
+            \begin{bmatrix}
+            X_1 & X_2
+            \end{bmatrix}
+            \begin{bmatrix}
+            0.04788649 & -0.02119961 \\
+            -0.02119961 & 0.04702442
+            \end{bmatrix}
+            \begin{bmatrix}
+            109.5319 \\
+            104.6407
+            \end{bmatrix}
+            \\[1em]
+            &\quad
+            -\frac{1}{2}
+            \begin{bmatrix}
+            109.5319 & 104.6407
+            \end{bmatrix}
+            \begin{bmatrix}
+            0.04788649 & -0.02119961 \\
+            -0.02119961 & 0.04702442
+            \end{bmatrix}
+            \begin{bmatrix}
+            109.5319 \\
+            104.6407
+            \end{bmatrix}
+            +\log(0.3474)
+            \\[1em]
+            &=
+            \begin{bmatrix}
+            X_1 & X_2
+            \end{bmatrix}
+            \begin{bmatrix}
+            3.0189 \\
+            2.5919
+            \end{bmatrix}
+            - 300.9440 + \log(0.3474)
+            \\[1em]
+            &\underrightarrow{=-302.0016 + 3.0189X_1 + 2.5919X_2}.
+          \end{align*}
+          \begin{align*}
+            \delta_3(X)
+            &=
+            \begin{bmatrix}
+            X_1 & X_2
+            \end{bmatrix}
+            \begin{bmatrix}
+            0.04788649 & -0.02119961 \\
+            -0.02119961 & 0.04702442
+            \end{bmatrix}
+            \begin{bmatrix}
+            104.5715 \\
+            119.3876
+            \end{bmatrix}
+            \\[1em]
+            &\quad
+            -\frac{1}{2}
+            \begin{bmatrix}
+            104.5715 & 119.3876
+            \end{bmatrix}
+            \begin{bmatrix}
+            0.04788649 & -0.02119961 \\
+            -0.02119961 & 0.04702442
+            \end{bmatrix}
+            \begin{bmatrix}
+            104.5715 \\
+            119.3876
+            \end{bmatrix}
+            +\log(0.4060)
+            \\[1em]
+            &=
+            \begin{bmatrix}
+            X_1 & X_2
+            \end{bmatrix}
+            \begin{bmatrix}
+            2.4702 \\
+            3.3885
+            \end{bmatrix}
+            - 331.4283 + \log(0.4060)
+            \\[1em]
+            & \underrightarrow{= -332.3276 + 2.4702X_1 + 3.3885X_2}.
+          \end{align*}
+
+    \item Thereafter, the fitted model was used to classify the test data. Figure \ref{fig:cm_lda}
+          illustrates the confusion matrix obtained:
+
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.55\textwidth]{images/confusion_matrix_lda.png}
+            \caption{Confusion Matrix}
+            \label{fig:cm_lda}
+          \end{figure}
+
+          Using Figure \ref{fig:cm_lda}, the overall accuracy of the model was obtained:
+
+          \[Accuracy = \frac{42 + 86 + 128}{290} \times 100 = 88.28 \%. \]
+
+          Since this is a multiclass classification problem, the sensitivity and specificity
+          was computed for each class by obtaining the TP, FN, FP and TN for each class. Sensitivity
+          is TP / (TP + FN) and specificity is TN / (TN + FP). Table \ref{tab:lda_class_metrics} illustrates the
+          results: 
+
+          \begin{table}[h]
+            \centering
+            \caption{Class-wise Sensitivity and Specificity}
+            \begin{tabular}{ccccccc}
+            \hline
+            Class & TP & FN & FP & TN & Sensitivity & Specificity \\
+            \hline
+            1 & 42  & 22 & 12 & 214 & 0.6563 & 0.9469 \\
+            2 & 86  & 11 & 21 & 172 & 0.8866 & 0.8912 \\
+            3 & 128 & 1  & 1  & 160 & 0.9922 & 0.9938 \\
+            \hline
+            \end{tabular}
+            \label{tab:lda_class_metrics}
+          \end{table}
+
+          Using the results obtained from Table \ref{fig:cm_lda}, the following mean values
+          were obtained:
+          \[\text{Mean Sensitivity} = 0.8450\]
+          \[\text{Mean Specificity} = 0.9440\]
+
+\end{enumerate}
+
+\partquestion{(c)}
