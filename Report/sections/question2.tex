@@ -1,7 +1,7 @@
 \section*{Question 2}
 
 \partquestion{(a)}For LDA, we classify an instance $x$ into class $k$ with the largest
-posterior probability. Using Bayes' theorem:
+posterior probability. Using Bayes' theorem \parencite{gareth2023introduction}:
 \[P(Y = k | X = x) = p_k(x) =  \frac{\pi_k f_k(x)}{\sum_{l = 1}^{K} \pi_l f_l(x)},\]
 and substituting $f_k(x)$, we obtain the following equation:
 \[
@@ -159,17 +159,7 @@ class from \emph{scikit-learn} was used.
             \end{bmatrix}
             +\log(0.2466)
             \\[1em]
-            &=
-            \begin{bmatrix}
-            X_1 & X_2
-            \end{bmatrix}
-            \begin{bmatrix}
-            2.6540 \\
-            2.5811
-            \end{bmatrix}
-            - 527.4675 + \log(0.2466)
-            \\[1em]
-            &\underrightarrow{=-263.0309 + 2.6540X_1 + 2.5811X_2}.
+            &\underrightarrow{=-263.7093 + 2.6608X_1 + 2.5878X_2}.
           \end{align*}
           \begin{align*}
             \delta_2(X)
@@ -201,17 +191,7 @@ class from \emph{scikit-learn} was used.
             \end{bmatrix}
             +\log(0.3474)
             \\[1em]
-            &=
-            \begin{bmatrix}
-            X_1 & X_2
-            \end{bmatrix}
-            \begin{bmatrix}
-            3.0189 \\
-            2.5919
-            \end{bmatrix}
-            - 300.9440 + \log(0.3474)
-            \\[1em]
-            &\underrightarrow{=-302.0016 + 3.0189X_1 + 2.5919X_2}.
+            &\underrightarrow{=-302.7819 + 3.0268X_1 + 2.5986X_2}.
           \end{align*}
           \begin{align*}
             \delta_3(X)
@@ -243,17 +223,7 @@ class from \emph{scikit-learn} was used.
             \end{bmatrix}
             +\log(0.4060)
             \\[1em]
-            &=
-            \begin{bmatrix}
-            X_1 & X_2
-            \end{bmatrix}
-            \begin{bmatrix}
-            2.4702 \\
-            3.3885
-            \end{bmatrix}
-            - 331.4283 + \log(0.4060)
-            \\[1em]
-            & \underrightarrow{= -332.3276 + 2.4702X_1 + 3.3885X_2}.
+            & \underrightarrow{= -333.1869 + 2.4766X_1 + 3.3973X_2}.
           \end{align*}
 
     \item Thereafter, the fitted model was used to classify the test data. Figure \ref{fig:cm_lda}
@@ -431,8 +401,8 @@ to K-means cluster $k$:
             Cluster & Centroid $X_1$ & Centroid $X_2$ \\
             \hline
             1 & 99.7470  & 99.3085 \\
-            2 & 104.8763 & 120.0094 \\
-            3 & 111.0364 & 106.0356 \\
+            2 & 111.0364 & 106.0356 \\
+            3 & 104.8763 & 120.0094 \\
             \hline
             \end{tabular}
             \label{tab:kmeans_centroids_3}
@@ -462,8 +432,8 @@ to K-means cluster $k$:
             Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
             \hline
             1 & 99.7470  & 99.3085  & 4.5787 & 4.9459 & 0.3000 \\
-            2 & 104.8763 & 120.0094 & 4.9881 & 4.3945 & 0.4028 \\
-            3 & 111.0364 & 106.0356 & 4.0027 & 4.0317 & 0.2972 \\
+            2 & 111.0364 & 106.0356 & 4.0027 & 4.0317 & 0.2972 \\
+            3 & 104.8763 & 120.0094 & 4.9881 & 4.3945 & 0.4028 \\
             \hline
             \end{tabular}
             \label{tab:gmm_starting_values_3}
@@ -482,8 +452,8 @@ to K-means cluster $k$:
             Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
             \hline
             1 & 100.5453 & 99.6885  & 5.3160 & 5.2141 & 0.2975 \\
-            2 & 104.6707 & 119.6564 & 5.0813 & 4.7909 & 0.4129 \\
-            3 & 110.6269 & 105.6018 & 4.5360 & 4.5226 & 0.2896 \\
+            2 & 110.6269 & 105.6018 & 4.5360 & 4.5226 & 0.2896 \\
+            3 & 104.6707 & 119.6564 & 5.0813 & 4.7909 & 0.4129 \\
             \hline
             \end{tabular}
             \label{tab:gmm_estimated_values_3}
@@ -525,10 +495,10 @@ to K-means cluster $k$:
             \hline
             Cluster & Centroid $X_1$ & Centroid $X_2$ \\
             \hline
-            1 & 111.2671 & 105.8966 \\
-            2 & 107.8834 & 122.4818 \\
-            3 & 99.8886  & 98.5331 \\
-            4 & 100.7348 & 115.4825 \\
+            1 & 99.8886  & 98.5331 \\
+            2 & 111.2671 & 105.8966 \\
+            3 & 100.7348 & 115.4825 \\
+            4 & 107.8834 & 122.4818 \\
             \hline
             \end{tabular}
             \label{tab:kmeans_centroids_4}
@@ -557,10 +527,10 @@ to K-means cluster $k$:
             \hline
             Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
             \hline
-            1 & 111.2671 & 105.8966 & 3.8095 & 3.9774 & 0.2869 \\
-            2 & 107.8834 & 122.4818 & 3.8208 & 3.6457 & 0.2303 \\
-            3 & 99.8886  & 98.5331  & 4.6618 & 4.3288 & 0.2772 \\
-            4 & 100.7348 & 115.4825 & 3.4678 & 3.8975 & 0.2055 \\
+            1 & 99.8886  & 98.5331  & 4.6618 & 4.3288 & 0.2772 \\
+            2 & 111.2671 & 105.8966 & 3.8095 & 3.9774 & 0.2869 \\
+            3 & 100.7348 & 115.4825 & 3.4678 & 3.8975 & 0.2055 \\
+            4 & 107.8834 & 122.4818 & 3.8208 & 3.6457 & 0.2303 \\
             \hline
             \end{tabular}
             \label{tab:gmm_starting_values_4}
@@ -578,10 +548,10 @@ to K-means cluster $k$:
             \hline
             Component & Mean $X_1$ & Mean $X_2$ & SD $X_1$ & SD $X_2$ & Mixing Proportion \\
             \hline
-            1 & 110.6256 & 105.6406 & 4.5479 & 4.4650 & 0.2866 \\
-            2 & 107.3547 & 121.6554 & 4.1547 & 4.1872 & 0.2327 \\
-            3 & 100.6293 & 99.4669  & 5.4124 & 5.0472 & 0.2932 \\
-            4 & 101.2129 & 116.7777 & 3.9741 & 4.4752 & 0.1875 \\
+            1 & 100.6293 & 99.4669  & 5.4124 & 5.0472 & 0.2932 \\
+            2 & 110.6256 & 105.6406 & 4.5479 & 4.4650 & 0.2866 \\
+            3 & 101.2129 & 116.7777 & 3.9741 & 4.4752 & 0.1875 \\
+            4 & 107.3547 & 121.6554 & 4.1547 & 4.1872 & 0.2327 \\
             \hline
             \end{tabular}
             \label{tab:gmm_estimated_values_4}
@@ -666,12 +636,22 @@ were obtained:
 Comparing the results obtained to the ones obtained from the LDA model used in 2.(b), it is clear
 that the LDA outperformed the GMM model. The sensitivity and specificity of the LDA model
 seen in Table \ref{tab:lda_class_metrics} show an overall better model performance over the 
-results seen in Table \ref{tab:gmm_class_metrics} for the GMM model with 3 compo The main reason has to do with the fact that the LDA
-model was a supervised model which knew the group labels during training. The GMM model with 
-3 components was able to identify group 3 very well but often confused true group 2 points as
-group 1 instead. The model achieved an overall accuracy of 85.24\% which is not that far off
+results seen in Table \ref{tab:gmm_class_metrics} for the GMM model with 3 components. The main reason has to do with the fact that the LDA
+model was a supervised model which knew the group labels during training. Both models were able to identify group 3 very well but often confused true group 2 points as
+group 1 instead and vice versa. This can be seen by the plot of the original data:
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.65\textwidth]{images/original.png}
+  \caption{Split of the combined input data}
+  \label{fig:original}
+\end{figure}
+
+Figure \ref{fig:original} shows how class 1 and 2 overlap affecting both model's accuracy and performance.
+However, both models still achieved decent overall results.
+The GMM model achieved an overall accuracy of 85.24\% which is not that far off
 from the LDA's performance of 88.28\%. This shows that unsupervised learning can discover
-meaningful insights from the data and pick up the latent structure oof the data even without
+meaningful insights from the data and pick up the latent structure of the data even without
 using true labels.
 
 In conclusion, when class labels are available, a supervised approach is generally better
